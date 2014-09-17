@@ -1,0 +1,24 @@
+{
+  "name": "angular-gcms",
+  "version": "0.0.1",
+  "description": "Use a google spreadsheet as a backend content repository",
+  "main": "gcms.js",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ng-annotate": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlovison/angular-gcms.git"
+  },
+  "author": "jlovison@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jlovison/angular-gcms/issues"
+  },
+  "homepage": "https://github.com/jlovison/angular-gcms"
+}
