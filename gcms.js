@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('jlo.gcms')
-  .service('Gcms', function Gcms($http, $q, $log, localStorageService) {
+angular.module('jlovison.gcms')
+  .service('GcmsService', function GcmsService($http, $q, $log, localStorageService) {
     // Setup a parser for data
     var parseData = function(data, columnList) { // the data object we got from Google
       var entries = (data.feed.entry);
