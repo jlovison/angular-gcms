@@ -1,0 +1,27 @@
+{
+  "name": "angular-gcms",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jlovison/angular-gcms",
+  "authors": [
+    "Josh Lovison <jlovison@gmail.com>"
+  ],
+  "description": "Use a google spreadsheet as a backend content repository",
+  "main": "gcms.js",
+  "keywords": [
+    "angular",
+    "spreadsheet",
+    "backend",
+    "prototyping"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.x"
+  }
+}
