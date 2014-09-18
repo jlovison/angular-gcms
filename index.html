@@ -42,14 +42,12 @@
 <h3>How to use</h3>
 <h4>Installation</h4>
 <p>To install, just use bower:</p>
-<pre><code>
-$ bower install jlovison/angular-gcms
+<pre><code>$ bower install jlovison/angular-gcms
 </code></pre>
 
 <p>After linking the resulting javascript file into your project's HTML (a minified version can be found in the 'dist' directory), add the project module as a dependency to your angular project module declaration:</p>
 
-<pre><code>
-angular.module('YourModule', ['OtherStuff', 'jlovison.gcms'])
+<pre><code>angular.module('YourModule', ['OtherStuff', 'jlovison.gcms'])
 </code></pre>
 
 <h4>Setting up a Google Spreadsheet</h4>
@@ -63,10 +61,9 @@ angular.module('YourModule', ['OtherStuff', 'jlovison.gcms'])
 
 <p>So now let's fetch the data in your spreadsheet into your project. I'll illustrate a simple controller use case (where you want to map the data into a variable bound to your scope). You could also use this service within other services, etc.</p>
 
-<p>Inside your <em>controller.js</em><p>
+<p>Inside your <em>controller.js</em>:<p>
 
-<pre><code>
-angular.module('YourApp')
+<pre><code>angular.module('YourApp')
   .controller('YourController', function ($scope, GcmsService) {
     // Fetch the content
     GcmsService.get(
