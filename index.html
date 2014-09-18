@@ -31,40 +31,60 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h3>Mock a read-only backend easily</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Angular is awesome, but one of the biggest hurdles in prototyping a new project is getting together a backend service to build off of. I often found myself in situations where I wanted an easily modified backend, ideally one that non-technical co-workers could modify (i.e. "do the data entry for").</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>There's actually a great data modeling service that allows easy collaborative editing: Google Spreadsheets. And awesomely enough, it has a JSON interface where you can grab the spreadsheet as a JSON blob. The formatting is a bit wonky, which is where <em>angular-gcms</em> comes in.</p>
+
+<p>For read-only backends or prototyping, this is a great solution. If you want to write as well, you could always wrap together a service that reads from the spreadsheet, saves a version in localStorage, and then writes to that cached version (as long as data synchronization between clients was not necessary).</p>
+
+<h3>How to use</h3>
+<h4>Installation</h4>
+<p>To install, just use bower:</p>
+<pre><code>
+$ bower install jlovison/angular-gcms
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>After linking the resulting javascript file into your project's HTML (a minified version can be found in the 'dist' directory), add the project module as a dependency to your angular project module declaration:</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<pre><code>
+angular.module('YourModule', ['OtherStuff', 'jlovison.gcms'])
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h4>Setting up a Google Spreadsheet</h4>
+<p>Now you need a Google Spreadsheet modeled around your data. Create a spreadsheet on <a href="https://drive.google.com">Google Drive</a>. The top row will be ignored, so feel free to add in column headers for the data, along with some initial data values.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<p>Ok, great. Now, to make the spreadsheet accessible for ingestion with the GcmsService, go to <em>File > Publish to the web</em>. You'll see various options regarding how the document is published, but it doesn't matter what you select, as long as the document is published. While here though, make sure to copy down the spreadsheet ID (you can find it in the url for the 'Document link' -- it's the long number between <code>/d/</code> and <code>/pubhtml</code>).</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>That's all for the spreadsheet.</p>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h4>Using the GcmsService in your project</h4>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>So now let's fetch the data in your spreadsheet into your project. I'll illustrate a simple controller use case (where you want to map the data into a variable bound to your scope). You could also use this service within other services, etc.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<p>Inside your <em>controller.js</em><p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+<pre><code>
+angular.module('YourApp')
+  .controller('YourController', function ($scope, GcmsService) {
+    // Fetch the content
+    GcmsService.get(
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWZYZ11121314', // Your spreadsheet ID 
+      ['fieldName1', 'fieldName2']  // Your column names (in correct order)
+    ).then(function(data) {
+      $scope.content = data; 
+    });
+  });
+</code></pre>
 
+<p>The service takes your spreadsheet ID and a list of your column names, and returns a promise, which, once it resolves, has a data object that has each row as an object with attributes that match your column names, and values matching the respective data in the spreadsheet.</p>
+
+<h4>Caveats</h4>
+<p>Sometimes I've had strange results with the Google Spreadsheet JSON interface when the table cells include apostrophes. In general, know that the entire service could easily break should Google make any changes to how Spreadsheet documents are presented as JSON. So while this is a really useful resource in quickly developing a prototype or demo, I <strong>REALLY</strong> don't suggest using it in production (or at least for anything critical).</p>
+
+<h4>Contributing</h4>
+<p>Feel free to issue pull requests. The project as is has been functional for me in several projects so far, and while it could always use a solid test suite (or any tests), I've kept the scope of the project somewhat limited. But this is more a reflection of my own laziness, and not a particular desire to avoid features if a good fit.</p>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
@@ -72,8 +92,6 @@ $ git checkout gh-pages
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
 
   </body>
 </html>
