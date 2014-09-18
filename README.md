@@ -8,9 +8,11 @@ Use a google spreadsheet as a backend content repository
 ### Quickstart ###
 
 Install using:
+
     bower install jlovison/angular-gcms
 
 Add to your project:
+
     angular.module('YourModule', ['OtherStuff', 'jlovison.gcms'])
 
 Assuming you have a google spreadsheet being published with an id of '12345' and two columns ('title' and 'post' respectively), pull in the spreadhsheet data as follows:
