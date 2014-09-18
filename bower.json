@@ -6,7 +6,7 @@
     "Josh Lovison <jlovison@gmail.com>"
   ],
   "description": "Use a google spreadsheet as a backend content repository",
-  "main": "gcms.js",
+  "main": "angular-gcms.js",
   "keywords": [
     "angular",
     "spreadsheet",
