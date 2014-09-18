@@ -23,6 +23,5 @@
   ],
   "dependencies": {
     "angular": "~1.2.x",
-    "angular-local-storage": "~0.0.7"
   }
 }
