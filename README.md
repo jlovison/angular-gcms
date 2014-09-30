@@ -1,6 +1,8 @@
 angular-gcms
 ============
 
+[![Build Status](https://secure.travis-ci.org/jlovison/angular-gcms.png?branch=master)](https://travis-ci.org/jlovison/angular-gcms)
+
 Use a google spreadsheet as a backend content repository
 
 [Full Instructions](http://jlovison.github.io/angular-gcms/)
