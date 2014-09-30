@@ -9,7 +9,13 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-ng-annotate": "latest"
+    "grunt-karma": "^0.9.0",
+    "grunt-ng-annotate": "latest",
+    "karma": "^0.12.23",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   },
   "repository": {
     "type": "git",

@@ -4,8 +4,8 @@ module.exports = function(grunt) {
     clean: ["dist"],
     ngAnnotate: {
       build: {
-        src: ['gcms.js'],
-        dest: 'dist/gcms.min.js'
+        src: ['angular-gcms.js'],
+        dest: 'dist/angular-gcms.min.js'
       }
     },
     uglify: {
@@ -14,8 +14,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: [{
-          src: 'dist/gcms.min.js',
-          dest: 'dist/gcms.min.js'
+          src: 'dist/angular-gcms.min.js',
+          dest: 'dist/angular-gcms.min.js'
         }]
       }
     },
@@ -30,10 +30,25 @@ module.exports = function(grunt) {
       }
 
     },
-    watch: {
-      files: ['gcms.js'],
-      tasks: ['clean', 'jshint', 'ngAnnotate', 'uglify']
+    karma: {
+      unit: {
+        configFile: 'test/karma.conf.js',
+        background: true
+      },
+      travis: {
+        configFile: 'test/karma.conf.js',
+        singleRun: true,
+        browsers: ['PhantomJS']
+      }
     },
+    watch: {
+      files: ['angular-gcms.js'],
+      tasks: ['clean', 'jshint', 'ngAnnotate', 'uglify'],
+      karma: {
+        files: ['angular-gcms.js', 'test/unit/*.js'],
+        tasks: ['karma:unit:run'] 
+      }
+    }
   });
 
   // Libraries
@@ -42,8 +57,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-karma');
 
   // Default Tasks
   grunt.registerTask('default', ['clean', 'jshint', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('devmode', ['karma:unit', 'watch:karma']);
+  grunt.registerTask('test', ['karma:travis']);
 
 };

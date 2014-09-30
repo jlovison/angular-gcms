@@ -23,5 +23,8 @@
   ],
   "dependencies": {
     "angular": "~1.2.x"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.25"
   }
 }
