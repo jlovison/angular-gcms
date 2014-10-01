@@ -4,7 +4,9 @@ describe('angular-gcms', function () {
   // Setup initialization variables
   var GcmsService,
       httpBackend,
-      log;
+      log,
+      testKey,
+      url;
 
   // load the service's module
   beforeEach(module('jlovison.gcms'));
@@ -14,6 +16,11 @@ describe('angular-gcms', function () {
     log = $log;
     httpBackend = $httpBackend;
     GcmsService = _GcmsService_;
+    
+    // Setup testing constants
+    testKey = '123456';
+    url = 'https://spreadsheets.google.com/feeds/cells/' + testKey + '/od6/public/values?alt=json';
+
   }));
 
   // make sure no expectations were missed in your tests.
@@ -23,9 +30,9 @@ describe('angular-gcms', function () {
     httpBackend.verifyNoOutstandingRequest();
   });
 
-  // Setup testing constants
-  var testKey = '123456';
-  var url = 'https://spreadsheets.google.com/feeds/cells/' + testKey + '/od6/public/values?alt=json';
+  it('should do something', function () {
+    expect(!!GcmsService).toBe(true);
+  });
 
   it('should fetch from the server based on a key', function () {
     httpBackend.expectGET(url).respond(404);
@@ -83,17 +90,17 @@ describe('angular-gcms', function () {
     };
     var expectedData = [{
       'id': 0,
-      'title': 'Title One',
-      'content': 'Content One'
+      'headline': 'Title One',
+      'article': 'Content One'
     }, {
       'id': 1,
-      'title': 'Title Two',
-      'content': 'Content Two'
+      'headline': 'Title Two',
+      'article': 'Content Two'
     }];
     var testData = [];
 
     httpBackend.expectGET(url).respond(200, resultData);
-    GcmsService.get(testKey, ['title', 'content'])
+    GcmsService.get(testKey, ['headline', 'article'])
       .then(function(data) {
         testData = data;
       });
@@ -110,9 +117,4 @@ describe('angular-gcms', function () {
     // Check error was properly logged
     expect(log.error.logs[0][0]).toBe('The request failed. Data: Page Not Found; Status: 404');
   });
-
-  it('should do something', function () {
-    expect(!!GcmsService).toBe(true);
-  });
-  
 });
