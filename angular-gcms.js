@@ -44,12 +44,13 @@ angular.module('jlovison.gcms', [])
     };
 
     // Define the spreadsheet getter function with promise return
-    var getSpreadsheet = function(sheetId, columnList) {
+    var getSpreadsheet = function(sheetId, worksheetId, columnList) {
       var deferred = $q.defer();
       // Load the data from the spreadsheet sheetId
+      var worksheetId = 'od6';
       $http({
         method: 'GET',
-        url: 'https://spreadsheets.google.com/feeds/cells/' + sheetId + '/od6/public/values?alt=json',
+        url: 'https://spreadsheets.google.com/feeds/cells/' + sheetId + '/' + worksheetId + '/public/values?alt=json',
         options: { cache: true }
       })
       .success(function(data) {
