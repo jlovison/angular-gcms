@@ -39,6 +39,14 @@ describe('angular-gcms', function () {
     GcmsService.get(testKey);
     httpBackend.flush();
   });
+
+  it('should fetch from the server based on a key and sheetId', function () {
+    var testSheetId = "ab1"; 
+    var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/' + testKey + '/' + testSheetId + '/public/values?alt=json';
+    httpBackend.expectGET(sheetUrl).respond(404);
+    GcmsService.get(testKey, ['column1', 'column2'], testSheetId);
+    httpBackend.flush();
+  });
   
   it('should parse and return data when fetched', function () {
     var resultData = {
