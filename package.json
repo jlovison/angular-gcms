@@ -1,6 +1,6 @@
 {
   "name": "angular-gcms",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Use a google spreadsheet as a backend content repository",
   "main": "gcms.js",
   "devDependencies": {
